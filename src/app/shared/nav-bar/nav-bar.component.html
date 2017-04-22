@@ -1,3 +1,22 @@
-<p>
-  nav-bar works!
-</p>
+<nav class="notes-section">
+    <div class="notes-list">
+        <h2>Notes
+        </h2>
+        <div class="notes" *ngIf="noNotes">
+            <div *ngFor="let note of mockData.notes">
+                <img *ngIf="note?.image" [src]="note?.image" [alt]="note?.title" />
+                <h4>{{note?.title}}</h4>
+                <p class="note-description"> {{note?.description}}</p>
+            </div>
+        </div>
+        <p class="blank-message" [hidden]="noNotes">No Notes Found!</p>
+        <!--<form class="note-form" #noteForm="ngForm" (ngSubmit)="postNote(noteForm.value)">
+            <label for="title" class="accessibility">Title</label>
+            <input type="text" placeholder="Title" name="title"  ngModel />
+            <label for="des" class="accessibility">Description</label>
+            <textarea required rows="4" cols="50" placeholder="Please write a description..." name="des" ngModel></textarea>
+            <label for="submit-button" class="accessibility">Submit Button</label>
+            <input type="submit" name="submit-button" class="btn-submit" value="SUBMIT" />
+        </form>-->
+    </div>
+</nav>

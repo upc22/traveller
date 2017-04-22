@@ -1,0 +1,19 @@
+.menu-bar {
+    z-index: 10;
+    width: 100%;
+    .branding {
+        vertical-align: middle;
+        margin-left: 16px;
+    }
+    .btn-nav,
+    .btn-menu {
+        border: none;
+        color: white;
+        background: #2196f3;
+    }
+    .spacer {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+}
