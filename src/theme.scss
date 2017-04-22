@@ -1,21 +1,13 @@
 @import '~@angular/material/_theming';
-
 @import "~@progress/kendo-theme-default/scss/all";
-
 @include mat-core();
-
-$primary: mat-palette($mat-red);
-$accent: mat-palette($mat-blue);
-
+$primary: mat-palette($mat-blue);
+$accent: mat-palette($mat-red);
 $theme: mat-light-theme($primary, $accent);
-
 @include angular-material-theme($theme);
-
 .dark-theme {
-  $dark-primary: mat-palette($mat-light-blue);
-  $dark-accent: mat-palette($mat-green);
-
-  $dark-theme: mat-dark-theme($dark-primary, $dark-accent);
-
-  @include angular-material-theme($dark-theme);
+    $dark-primary: mat-palette($mat-light-blue);
+    $dark-accent: mat-palette($mat-green);
+    $dark-theme: mat-dark-theme($dark-primary, $dark-accent);
+    @include angular-material-theme($dark-theme);
 }
