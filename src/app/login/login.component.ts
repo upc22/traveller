@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.af.auth.login({
       provider: AuthProviders.Google,
-      method: AuthMethods.Redirect
+      method: AuthMethods.Popup
     });
   }
   loginWithFB() {
     this.af.auth.login({
       provider: AuthProviders.Facebook,
-      method: AuthMethods.Redirect
+      method: AuthMethods.Popup
     });
   }
 
