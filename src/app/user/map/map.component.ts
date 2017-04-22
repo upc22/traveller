@@ -1,5 +1,5 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { NotesService } from 'app/maps/services/notes.service';
+import { Component, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { NotesService } from 'app/user/services/notes.service';
 import { GoogleMapsAPIWrapper } from '@agm/core';
 
 @Component({
@@ -10,6 +10,7 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
 export class MapComponent implements OnInit {
 
   markers = [];
+  @Output() toggleNav = new EventEmitter<boolean>();
   lat = 51.678418;
   lng = 7.809007;
   zoom = 13;
@@ -21,7 +22,7 @@ export class MapComponent implements OnInit {
   }
 
   private setCurrentPosition() {
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
@@ -58,6 +59,7 @@ export class MapComponent implements OnInit {
     this.closeOtherInfoWindow();
     this.lastIndex = index;
     marker['isOpen'] = true;
+    this.toggleNav.emit(true);
   }
 
   saveNote(index: number) {

@@ -1,2 +1,3 @@
 <app-menu></app-menu>
-<router-outlet></router-outlet>
+<app-nav-bar *ngIf="isNavVisible" (showNav)="toggleNavBar($event)"></app-nav-bar>
+<app-map (toggleNav)="toggleNavBar($event)"></app-map>

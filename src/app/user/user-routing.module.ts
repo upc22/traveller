@@ -4,14 +4,7 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [{
   path: '',
-  component: HomeComponent,
-  children: [{
-    path: '',
-    loadChildren: 'app/maps/maps.module#MapsModule'
-  }, {
-    path: 'maps',
-    loadChildren: 'app/maps/maps.module#MapsModule'
-  }]
+  component: HomeComponent
 }];
 
 @NgModule({
