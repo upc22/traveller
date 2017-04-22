@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  isNavVisible = false;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  toggleNavBar(toggle){
+    this.isNavVisible = toggle;
   }
 
 }

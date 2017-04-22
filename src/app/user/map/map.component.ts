@@ -1,5 +1,5 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { NotesService } from 'app/maps/services/notes.service';
+import { Component, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { NotesService } from 'app/user/services/notes.service';
 
 @Component({
   selector: 'app-map',
@@ -9,7 +9,7 @@ import { NotesService } from 'app/maps/services/notes.service';
 export class MapComponent implements OnInit {
 
   markers = [];
-
+  @Output() toggleNav = new EventEmitter<boolean>();
   constructor(private notesService: NotesService) { }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class MapComponent implements OnInit {
 
   clickedMarker(marker: {}) {
     this.closeOtherInfoWindow();
-    marker['isOpen'] = true;
+    this.toggleNav.emit(true);
   }
 
   saveNote(index: number) {
