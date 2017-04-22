@@ -19,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from 'angularfire2';
 
 import 'hammerjs';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -53,7 +54,8 @@ export const firebaseConfig = {
     MaterialModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    ButtonsModule
   ],
   providers: [MenuItems],
   bootstrap: [AppComponent]
