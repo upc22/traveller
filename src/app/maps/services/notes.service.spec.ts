@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { NotesService } from 'app/user/services/notes.service';
 
-import { NotesFetchService } from './notes-fetch.service';
 
 describe('NotesFetchService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotesFetchService]
+      providers: [NotesService]
     });
   });
 
-  it('should ...', inject([NotesFetchService], (service: NotesFetchService) => {
+  it('should ...', inject([NotesService], (service: NotesService) => {
     expect(service).toBeTruthy();
   }));
 });

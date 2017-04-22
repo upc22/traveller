@@ -25,13 +25,24 @@ export class NotesService {
   fetchNotes() {
     return Observable.create((observer: Observer<Array<{}>>) => {
       this.process.next(Action.QueryStart);
-      this.notesRef.subscribe((notes) => {
-        observer.next(notes);
-        observer.complete();
-        this.process.next(Action.QueryStop);
-      }, (err) => {
-        observer.error(err);
-      });
+      if (this.notesRef) {
+        this.subscribeNotesRef(observer);
+      } else {
+        this.af.auth.subscribe((auth) => {
+          this.notesRef = this.af.database.list('/users/' + auth.uid + '/notes');
+          this.subscribeNotesRef(observer);
+        });
+      }
+    });
+  }
+
+  private subscribeNotesRef(observer) {
+    this.notesRef.subscribe((notes) => {
+      observer.next(notes);
+      observer.complete();
+      this.process.next(Action.QueryStop);
+    }, (err) => {
+      observer.error(err);
     });
   }
 }

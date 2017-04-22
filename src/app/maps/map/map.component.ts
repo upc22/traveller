@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { NotesService } from '../services/notes.service';
+import { NotesService } from 'app/maps/services/notes.service';
 
 @Component({
   selector: 'app-map',
