@@ -1,12 +1,17 @@
 
 import { Routes } from '@angular/router';
-import { AdminLayoutComponent } from './adminLayout/admin-layout.component';
 
 export const AppRoutes: Routes = [{
   path: '',
-  component: AdminLayoutComponent,
   children: [{
-    path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  }, {
+    path: 'login',
+    loadChildren: './login/login.module#LoginModule'
+  }, {
+    path: ':user',
+    loadChildren: './user/user.module#UserModule'
   }]
 }];

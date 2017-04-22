@@ -1,4 +1,5 @@
 
+import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -16,9 +17,11 @@ import { AppRoutes } from './app.routing';
 import { CoreModule } from './core/core.module';
 import { MenuItems } from './admin/admin.menu';
 import { SharedModule } from './shared/shared.module';
-import { AngularFireModule } from 'angularfire2';
 
-import 'hammerjs';
+
+import { AgmCoreModule } from '@agm/core';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 export function createTranslateLoader(http: Http) {
@@ -55,6 +58,9 @@ export const firebaseConfig = {
     FlexLayoutModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'
+    }),
     ButtonsModule
   ],
   providers: [MenuItems],
