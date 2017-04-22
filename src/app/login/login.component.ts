@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, AuthMethods, AuthProviders } from 'angularfire2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +10,17 @@ import { AngularFire, FirebaseListObservable, AuthMethods, AuthProviders } from 
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private af: AngularFire) {
+  constructor(private af: AngularFire, private _router: Router) {
     this.af.auth.subscribe((auth) => {
-      const userRef = af.database.object('/users/' + auth.uid);
-      userRef.update({
-        name : auth.auth.displayName
-      });
+      if (auth) {
+        const userRef = af.database.object('/users/' + auth.uid);
+        userRef.update({
+          name: auth.auth.displayName
+        });
+        this._router.navigate(['/maps']);
+      }
     });
-   }
+  }
 
   ngOnInit() {
   }
@@ -24,13 +28,13 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.af.auth.login({
       provider: AuthProviders.Google,
-      method: AuthMethods.Redirect
+      method: AuthMethods.Popup
     });
   }
   loginWithFB() {
     this.af.auth.login({
       provider: AuthProviders.Facebook,
-      method: AuthMethods.Redirect
+      method: AuthMethods.Popup
     });
   }
 
