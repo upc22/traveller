@@ -4,34 +4,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet></router-outlet>',
-  styles: [`
-  :host {
-  display: flex;
-  flex: 1;
-}
-
-md-sidenav {
-  width: 320px;
-}
-
-.content {
-  padding: 12px;
-}
-
-/deep/ md-icon.avatar {
-  overflow: hidden;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  margin: 12px;
-}
-
-/deep/ .mat-list-item-content {
-  height: auto !important;
-}`]
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer, private dialog: MdDialog) {
+    constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer, private dialog: MdDialog) {
   }
 }
