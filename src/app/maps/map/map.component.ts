@@ -1,28 +1,37 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import { AngularFire } from 'angularfire2';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnChanges {
+export class MapComponent implements OnInit {
 
   nodeObject = {};
   markers = [];
-  remarks: string;
 
-  title = 'My first angular2-google-maps project';
   lat = 51.678418;
   lng = 7.809007;
+  notesRef;
 
-  constructor() { }
+  constructor(private af: AngularFire) {
+    this.af.auth.subscribe((auth) => {
+      this.notesRef = this.af.database.list('/users/' + auth.uid + '/notes');
+    });
+   }
+
+   ngOnInit(): void {
+      this.markers
+    }
 
   mapClicked(evt) {
     this.closeOtherInfoWindow();
     this.markers.push({
       lat: evt.coords.lat,
       lng: evt.coords.lng,
-      isOpen: true
+      isOpen: true,
+      remarks: ''
     });
     this.nodeObject['lat'] = evt.coords.lat;
     this.nodeObject['lng'] = evt.coords.lng;
@@ -39,9 +48,14 @@ export class MapComponent implements OnChanges {
     marker['isOpen'] = true;
   }
 
-  ngOnChanges() {
-    this.addReview();
+  saveNote(index: number) {
+    const currentMarker = this.markers[index];
+    currentMarker.isOpen = false;
+    this.notesRef.push({
+      message: currentMarker.remarks,
+      lat: currentMarker.lat,
+      lng: currentMarker.lng,
+      timestamp: new Date().getTime()
+    });
   }
-
-  addReview() {}
 }
