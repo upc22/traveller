@@ -16,7 +16,7 @@ import { AppRoutes } from './app.routing';
 import { CoreModule } from './core/core.module';
 import { MenuItems } from './admin/admin.menu';
 import { SharedModule } from './shared/shared.module';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import 'hammerjs';
 import { LoginComponent } from "app/login/login.component";
