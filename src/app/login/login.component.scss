@@ -1,6 +1,9 @@
 $btn-google-bg-color: #F44336;
 $btn-facebook-bg-color: #3b5998;
 
+:host {
+  width: 100%;
+}
 h1 {
   color: white;
   font-size: 4rem;
