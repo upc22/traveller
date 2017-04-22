@@ -5,7 +5,7 @@ export const AppRoutes: Routes = [{
   path: '',
   children: [{
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'maps',
     pathMatch: 'full'
   }, {
     path: 'login',

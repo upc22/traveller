@@ -17,7 +17,9 @@ import { AppRoutes } from './app.routing';
 import { CoreModule } from './core/core.module';
 import { MenuItems } from './admin/admin.menu';
 import { SharedModule } from './shared/shared.module';
-import { NguiMapModule } from '@ngui/map';
+
+
+import { AgmCoreModule } from '@agm/core';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
@@ -56,7 +58,9 @@ export const firebaseConfig = {
     FlexLayoutModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'}),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'
+    }),
     ButtonsModule
   ],
   providers: [MenuItems],
