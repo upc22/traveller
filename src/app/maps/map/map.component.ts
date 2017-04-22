@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { NotesService } from '../services/notes.service';
 
 @Component({
   selector: 'app-map',
@@ -8,22 +8,13 @@ import { AngularFire } from 'angularfire2';
 })
 export class MapComponent implements OnInit {
 
-  nodeObject = {};
   markers = [];
 
-  lat = 51.678418;
-  lng = 7.809007;
-  notesRef;
+  constructor(private notesService: NotesService) { }
 
-  constructor(private af: AngularFire) {
-    this.af.auth.subscribe((auth) => {
-      this.notesRef = this.af.database.list('/users/' + auth.uid + '/notes');
-    });
-   }
-
-   ngOnInit(): void {
-      this.markers
-    }
+  ngOnInit(): void {
+    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
+  }
 
   mapClicked(evt) {
     this.closeOtherInfoWindow();
@@ -31,10 +22,8 @@ export class MapComponent implements OnInit {
       lat: evt.coords.lat,
       lng: evt.coords.lng,
       isOpen: true,
-      remarks: ''
+      message: ''
     });
-    this.nodeObject['lat'] = evt.coords.lat;
-    this.nodeObject['lng'] = evt.coords.lng;
   }
 
   closeOtherInfoWindow() {
@@ -51,8 +40,8 @@ export class MapComponent implements OnInit {
   saveNote(index: number) {
     const currentMarker = this.markers[index];
     currentMarker.isOpen = false;
-    this.notesRef.push({
-      message: currentMarker.remarks,
+    this.notesService.saveNote({
+      message: currentMarker.message,
       lat: currentMarker.lat,
       lng: currentMarker.lng,
       timestamp: new Date().getTime()
