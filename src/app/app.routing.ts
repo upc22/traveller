@@ -11,7 +11,7 @@ export const AppRoutes: Routes = [{
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
   }, {
-    path: 'maps',
-    loadChildren: './maps/maps.module#MapsModule'
+    path: ':user',
+    loadChildren: './user/user.module#UserModule'
   }]
 }];

@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
         userRef.update({
           name: auth.auth.displayName
         });
-        this._router.navigate(['/maps']);
+        this._router.navigate(['/' + auth.auth.displayName.split(' ')[0]]);
       }
     });
   }
