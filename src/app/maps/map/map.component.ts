@@ -9,9 +9,9 @@ import { NotesService } from 'app/maps/services/notes.service';
 export class MapComponent implements OnInit {
 
   markers = [];
-  lat;
-  lng;
-  zoom;
+  lat = 51.678418;
+  lng = 7.809007;
+  zoom = 13;
 
   constructor(private notesService: NotesService) { }
 
@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.zoom = 12;
+        this.zoom = 18;
       });
     }
   }
