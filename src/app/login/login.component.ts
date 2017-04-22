@@ -10,7 +10,12 @@ import { AngularFire, FirebaseListObservable, AuthMethods, AuthProviders } from 
 export class LoginComponent implements OnInit {
 
   constructor(private af: AngularFire) {
-    this.af.auth.subscribe(auth => console.log(auth));
+    this.af.auth.subscribe((auth) => {
+      const userRef = af.database.object('/users/' + auth.uid);
+      userRef.update({
+        name : auth.auth.displayName
+      });
+    });
    }
 
   ngOnInit() {
