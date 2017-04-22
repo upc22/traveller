@@ -20,6 +20,7 @@ import { AngularFireModule } from 'angularfire2';
 import { NguiMapModule } from '@ngui/map';
 
 import 'hammerjs';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -55,7 +56,8 @@ export const firebaseConfig = {
     FlexLayoutModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'})
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'}),
+    ButtonsModule
   ],
   providers: [MenuItems],
   bootstrap: [AppComponent]
