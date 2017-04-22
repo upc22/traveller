@@ -1,40 +1,50 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import { NotesService } from '../services/notes.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnChanges {
+export class MapComponent implements OnInit {
 
-  nodeObject = {};
   markers = [];
-  remarks: string;
 
-  title = 'My first angular2-google-maps project';
-  lat = 51.678418;
-  lng = 7.809007;
+  constructor(private notesService: NotesService) { }
 
-  constructor() { }
+  ngOnInit(): void {
+    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
+  }
 
   mapClicked(evt) {
+    this.closeOtherInfoWindow();
     this.markers.push({
       lat: evt.coords.lat,
-      lng: evt.coords.lng
+      lng: evt.coords.lng,
+      isOpen: true,
+      message: ''
     });
-    this.nodeObject['lat'] = evt.coords.lat;
-    this.nodeObject['lng'] = evt.coords.lng;
-    console.log(evt);
   }
 
-  clickedMarker(index: number) {
-    console.log(`clicked the marker: ${index}`);
+  closeOtherInfoWindow() {
+    for (const marker of this.markers) {
+      marker.isOpen = false;
+    }
   }
 
-
-  ngOnChanges() {
-    this.addReview();
+  clickedMarker(marker: {}) {
+    this.closeOtherInfoWindow();
+    marker['isOpen'] = true;
   }
 
-  addReview() {}
+  saveNote(index: number) {
+    const currentMarker = this.markers[index];
+    currentMarker.isOpen = false;
+    this.notesService.saveNote({
+      message: currentMarker.message,
+      lat: currentMarker.lat,
+      lng: currentMarker.lng,
+      timestamp: new Date().getTime()
+    });
+  }
 }
