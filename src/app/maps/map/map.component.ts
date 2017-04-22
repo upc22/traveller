@@ -18,19 +18,26 @@ export class MapComponent implements OnChanges {
   constructor() { }
 
   mapClicked(evt) {
+    this.closeOtherInfoWindow();
     this.markers.push({
       lat: evt.coords.lat,
-      lng: evt.coords.lng
+      lng: evt.coords.lng,
+      isOpen: true
     });
     this.nodeObject['lat'] = evt.coords.lat;
     this.nodeObject['lng'] = evt.coords.lng;
-    console.log(evt);
   }
 
-  clickedMarker(index: number) {
-    console.log(`clicked the marker: ${index}`);
+  closeOtherInfoWindow() {
+    for (const marker of this.markers) {
+      marker.isOpen = false;
+    }
   }
 
+  clickedMarker(marker: {}) {
+    this.closeOtherInfoWindow();
+    marker['isOpen'] = true;
+  }
 
   ngOnChanges() {
     this.addReview();

@@ -1,7 +1,7 @@
 <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)">
-  <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(i)" [latitude]="m.lat"
-  [longitude]="m.lng" [markerDraggable]="false">
-    <agm-info-window>
+  <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m)" [latitude]="m.lat"
+  [longitude]="m.lng" [markerDraggable]="false" [openInfoWindow]="m.isOpen">
+    <agm-info-window [isOpen]="m.isOpen">
       <input type="text" id="userRemarks" [(ngModel)]="remarks" required/>
       <!--<input type="text" [(ngModel)]= "info"/>-->
     </agm-info-window>
