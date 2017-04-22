@@ -6,6 +6,7 @@ import { MapsRoutingModule } from './maps-routing.module';
 import { MapComponent } from './map/map.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { NotesService } from 'app/maps/services/notes.service';
+import { GoogleMapsAPIWrapper } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { NotesService } from 'app/maps/services/notes.service';
     ButtonsModule
   ],
   declarations: [ MapComponent ],
-  providers: [NotesService]
+  providers: [NotesService, GoogleMapsAPIWrapper]
 })
 export class MapsModule { }

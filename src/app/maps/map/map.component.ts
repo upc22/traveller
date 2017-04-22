@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { NotesService } from 'app/maps/services/notes.service';
+import { GoogleMapsAPIWrapper } from '@agm/core';
 
 @Component({
   selector: 'app-map',
@@ -12,9 +13,9 @@ export class MapComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
   zoom = 13;
+  lastIndex = -1;
 
-  constructor(private notesService: NotesService) { }
-
+  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService) { }
   ngOnInit(): void {
     this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
   }
@@ -37,22 +38,32 @@ export class MapComponent implements OnInit {
       isOpen: true,
       message: ''
     });
+    this.lastIndex = this.markers.length - 1;
   }
 
   closeOtherInfoWindow() {
     for (const marker of this.markers) {
       marker.isOpen = false;
     }
+    if (this.markers[this.lastIndex]) {
+      if (!this.markers[this.lastIndex].message) {
+        this.markers.splice(this.lastIndex, 1);
+      } else {
+        this.saveNote(this.lastIndex);
+      }
+    }
   }
 
-  clickedMarker(marker: {}) {
+  clickedMarker(marker: {}, index: number) {
     this.closeOtherInfoWindow();
+    this.lastIndex = index;
     marker['isOpen'] = true;
   }
 
   saveNote(index: number) {
     const currentMarker = this.markers[index];
     currentMarker.isOpen = false;
+    this.lastIndex = -1;
     this.notesService.saveNote({
       message: currentMarker.message,
       lat: currentMarker.lat,
