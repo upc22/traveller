@@ -1,7 +1,7 @@
-<div class="container-fluid banner">
+<div class="banner">
+    <h1>TrAvElLeR</h1>
     <div class="login-card">
-        <button kendoButton [primary]="true" (click)="loginWithGoogle()">Log In with Google</button>
-        <button kendoButton [primary]="true" (click)="loginWithFB()">Log In with Facebook</button>
-
+        <button kendoButton  (click)="loginWithGoogle()" [icon]="'google'" class="btn-google">Log In with Google</button>
+        <button kendoButton  (click)="loginWithFB()" [icon]="'facebook'" class="btn-facebook">Log In with Facebook</button>
     </div>
 </div>

@@ -6,7 +6,7 @@ export const AppRoutes: Routes = [{
   path: '',
   component: LoginComponent,
   children: [{
-    path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    path: '',
+    loadChildren: './maps/maps.module#MapsModule'
   }]
 }];
