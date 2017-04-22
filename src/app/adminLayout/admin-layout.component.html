@@ -51,7 +51,7 @@
   </md-sidenav-container>
   <md-menu #themeMenu x-position="before">
     <!--<button md-menu-item (click)="isDarkTheme = !isDarkTheme">Toggle Theme</button>-->
-    <button kendoButton md-menu-item (click)="" [icon]="'user'" >My Profile</button>
-    <button kendoButton md-menu-item (click)="" [icon]="'lock'" >Logout</button>
+    <button kendoButton md-menu-item (click)="showProfile()" [icon]="'user'" >My Profile</button>
+    <button kendoButton md-menu-item (click)="logOut()" [icon]="'lock'" >Logout</button>
   </md-menu>
 </div>
