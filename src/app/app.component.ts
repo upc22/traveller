@@ -6,11 +6,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-root',
   template: '<router-outlet></router-outlet>',
   styles: [`
-  :host {
-  display: flex;
-  flex: 1;
+:host {
+    flex: 1;
 }
-
 md-sidenav {
   width: 320px;
 }

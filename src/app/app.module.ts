@@ -19,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from 'angularfire2';
 
 import 'hammerjs';
+import { LoginComponent } from "app/login/login.component";
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -36,7 +37,8 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
