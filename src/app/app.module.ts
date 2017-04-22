@@ -17,6 +17,7 @@ import { CoreModule } from './core/core.module';
 import { MenuItems } from './admin/admin.menu';
 import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from 'angularfire2';
+import { NguiMapModule } from '@ngui/map';
 
 import 'hammerjs';
 
@@ -53,7 +54,8 @@ export const firebaseConfig = {
     MaterialModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'})
   ],
   providers: [MenuItems],
   bootstrap: [AppComponent]
