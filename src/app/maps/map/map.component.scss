@@ -2,3 +2,9 @@
     height: calc(100vh - 64px);
     width: 100vw;
 }
+
+agm-map+button {
+  position: fixed;
+  left: 10%;
+  bottom: 10%;
+}

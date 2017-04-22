@@ -1,4 +1,4 @@
-<agm-map (mapClick)="mapClicked($event)" [zoom]="4">
+<agm-map (mapClick)="mapClicked($event)" [scrollwheel]="false" [zoom]="zoom">
   <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m)" [latitude]="m.lat"
   [longitude]="m.lng" [markerDraggable]="false" [openInfoWindow]="m.isOpen">
     <agm-info-window [isOpen]="m.isOpen" [class]="info-window">
@@ -8,3 +8,4 @@
     </agm-info-window>
   </agm-marker>
 </agm-map>
+<button type="button" (click)="setCurrentPosition()"></button>

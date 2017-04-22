@@ -13,7 +13,21 @@ export class MapComponent implements OnInit {
   constructor(private notesService: NotesService) { }
 
   ngOnInit(): void {
+    this.zoom = 4;
+    this.lat = 39.8282;
+    this.lng = -98.5795;
+
     this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
+  }
+
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
   }
 
   mapClicked(evt) {
