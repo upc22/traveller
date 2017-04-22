@@ -59,7 +59,8 @@ export const firebaseConfig = {
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE'
+      apiKey: 'AIzaSyBCeI1JAgSC9k-n9yWZ8UzPHmyuN_Z0FpE',
+      libraries: ["places"]
     }),
     ButtonsModule
   ],

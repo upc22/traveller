@@ -1,3 +1,4 @@
+$animation-time: 0.5s;
 .notes-section {
   height: calc(100vh - 64px);
   padding-right: 5px;
@@ -5,14 +6,20 @@
   position: fixed;
   top: 64px;
   z-index: 999;
-  animation: slide-in 2s forwards;
-  -webkit-animation: slide-in 2s forwards;
+  animation: slide-in $animation-time forwards;
+  -webkit-animation: slide-in $animation-time forwards;
   @keyframes slide-in {
+    0% {
+      transform: translateX(-100%);
+    }
     100% {
       transform: translateX(0%);
     }
   }
   @-webkit-keyframes slide-in {
+    0% {
+      -webkit-transform: translateX(-100%);
+    }
     100% {
       -webkit-transform: translateX(0%);
     }
@@ -25,6 +32,10 @@
     -webkit-box-shadow: -3px 1px 5px -1px #AAA;
     -moz-box-shadow: -3px 1px 5px -1px #AAA;
     box-shadow: -3px 1px 5px -1px #AAA;
+    .heading-wrapper>span {
+      float: right;
+      margin-right: 16px;
+    }
   }
   h2 {
     display: inline;

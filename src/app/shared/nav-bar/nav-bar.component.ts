@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NotesService } from 'app/user/services/notes.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { NotesService } from 'app/user/services/notes.service';
 })
 export class NavBarComponent implements OnInit {
 
+  @Output() showNav = new EventEmitter<boolean>();
   notes = [];
   constructor(private notesService: NotesService) { }
 
@@ -15,8 +16,8 @@ export class NavBarComponent implements OnInit {
     this.notesService.fetchNotes().subscribe((notes) => this.notes = notes);
   }
 
-  postNote(value) {
-    console.log(value);
+  closeNav() {
+    this.showNav.emit(false);
   }
 
 }
