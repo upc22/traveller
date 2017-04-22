@@ -1,10 +1,10 @@
 
 import { Routes } from '@angular/router';
-import { AdminLayoutComponent } from './adminLayout/admin-layout.component';
+import { LoginComponent } from "app/login/login.component";
 
 export const AppRoutes: Routes = [{
   path: '',
-  component: AdminLayoutComponent,
+  component: LoginComponent,
   children: [{
     path: '',
     loadChildren: './maps/maps.module#MapsModule'
