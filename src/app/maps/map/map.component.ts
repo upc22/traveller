@@ -1,5 +1,4 @@
 import { Component, OnChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-map',
@@ -10,13 +9,15 @@ export class MapComponent implements OnChanges {
 
   nodeObject = {};
   markers = [];
-  remarks: FormGroup;
+  remarks: string;
 
   title = 'My first angular2-google-maps project';
   lat = 51.678418;
   lng = 7.809007;
 
-  mapClicked(evt){
+  constructor() { }
+
+  mapClicked(evt) {
     this.markers.push({
       lat: evt.coords.lat,
       lng: evt.coords.lng
@@ -30,17 +31,10 @@ export class MapComponent implements OnChanges {
     console.log(`clicked the marker: ${index}`);
   }
 
-  constructor(private formBuilder: FormBuilder
-) { }
 
   ngOnChanges() {
     this.addReview();
   }
 
-  addReview(){
-    this.remarks = this.formBuilder.group({
-      userReview: [Validators.required]
-    });
-  }
-
+  addReview() {}
 }
