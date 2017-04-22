@@ -11,15 +11,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
   display: flex;
   flex: 1;
 }
-.branding{
-  vertical-align:middle;
-  margin-left: 16px;
-}
-.btn-nav{
-  border:none;
-  color:white;
-  background:#f44336;
-}
+
 `]
 })
 
