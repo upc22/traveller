@@ -9,14 +9,13 @@ import { NotesService } from 'app/maps/services/notes.service';
 export class MapComponent implements OnInit {
 
   markers = [];
+  lat;
+  lng;
+  zoom;
 
   constructor(private notesService: NotesService) { }
 
   ngOnInit(): void {
-    this.zoom = 4;
-    this.lat = 39.8282;
-    this.lng = -98.5795;
-
     this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
   }
 
