@@ -16,12 +16,22 @@ import { AppRoutes } from './app.routing';
 import { CoreModule } from './core/core.module';
 import { MenuItems } from './admin/admin.menu';
 import { SharedModule } from './shared/shared.module';
+import { AngularFireModule } from 'angularfire2';
 
 import 'hammerjs';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }
+
+export const firebaseConfig = {
+  apiKey: 'AIzaSyAI-S2iMnFHY24b7uWkccjCKRt_TBaU578',
+  authDomain: 'traveller-98580.firebaseapp.com',
+  databaseURL: 'https://traveller-98580.firebaseio.com',
+  projectId: 'traveller-98580',
+  storageBucket: 'traveller-98580.appspot.com',
+  messagingSenderId: '283188344046'
+};
 
 @NgModule({
   declarations: [
@@ -42,7 +52,8 @@ export function createTranslateLoader(http: Http) {
     }),
     MaterialModule,
     FlexLayoutModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [MenuItems],
   bootstrap: [AppComponent]
