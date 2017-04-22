@@ -1,4 +1,5 @@
 
+import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -19,8 +20,6 @@ import { SharedModule } from './shared/shared.module';
 import { NguiMapModule } from '@ngui/map';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
-import 'hammerjs';
-import { LoginComponent } from 'app/login/login.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 export function createTranslateLoader(http: Http) {
@@ -39,8 +38,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
-    LoginComponent
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
