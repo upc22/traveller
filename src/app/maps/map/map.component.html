@@ -2,7 +2,7 @@
   <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(i)" [latitude]="m.lat"
   [longitude]="m.lng" [markerDraggable]="false">
     <agm-info-window>
-      <input type="text" id="userRemarks" formControlName="userReview"/>
+      <input type="text" id="userRemarks" [(ngModel)]="remarks" required/>
       <!--<input type="text" [(ngModel)]= "info"/>-->
     </agm-info-window>
   </agm-marker>

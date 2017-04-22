@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -11,6 +12,7 @@ import { MapComponent } from './map/map.component';
   imports: [
     CommonModule,
     AgmCoreModule,
+    FormsModule,
     MapsRoutingModule
   ],
   declarations: [ MapComponent ]
