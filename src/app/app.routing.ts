@@ -5,13 +5,13 @@ export const AppRoutes: Routes = [{
   path: '',
   children: [{
     path: '',
-    redirectTo: 'maps',
+    redirectTo: 'login',
     pathMatch: 'full'
   }, {
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
   }, {
-    path: 'maps',
-    loadChildren: './maps/maps.module#MapsModule'
+    path: ':user',
+    loadChildren: './user/user.module#UserModule'
   }]
 }];
