@@ -30,6 +30,7 @@ export class NotesService {
       } else {
         this.af.auth.subscribe((auth) => {
           this.notesRef = this.af.database.list('/users/' + auth.uid + '/notes');
+          // this.notesRef.remove();
           this.subscribeNotesRef(observer);
         });
       }

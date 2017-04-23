@@ -7,7 +7,7 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges {
 
   markers = [];
   @Output() toggleNav = new EventEmitter<boolean>();
@@ -18,7 +18,11 @@ export class MapComponent implements OnInit {
 
   constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService) { }
   ngOnInit(): void {
-    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
+    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes.slice(0, 20));
+  }
+
+  ngOnChanges(event) {
+    console.log(event);
   }
 
   private setCurrentPosition() {
@@ -37,6 +41,8 @@ export class MapComponent implements OnInit {
       lat: evt.coords.lat,
       lng: evt.coords.lng,
       isOpen: true,
+      isSave: false,
+      isPublic: true,
       message: ''
     });
     this.lastIndex = this.markers.length - 1;
@@ -56,10 +62,19 @@ export class MapComponent implements OnInit {
   autoSaveDeleteNotes(index: number) {
     if (this.markers[index]) {
       if (!this.markers[index].message) {
-        this.markers.splice(index, 1);
+        this.deleteMarker(index);
       } else {
         this.saveNote(index);
       }
+    }
+  }
+
+  handleKeyDown($event, index) {
+    const marker = this.markers[index];
+    marker.isSave = true;
+    if ($event.keyCode === 13) {
+      marker.isOpen = false;
+      this.autoSaveDeleteNotes(index);
     }
   }
 
@@ -70,15 +85,24 @@ export class MapComponent implements OnInit {
     this.toggleNav.emit(true);
   }
 
+  deleteMarker(index) {
+    this.markers.splice(index, 1);
+  }
+
   saveNote(index: number) {
     const currentMarker = this.markers[index];
     currentMarker.isOpen = false;
-    this.lastIndex = -1;
-    this.notesService.saveNote({
-      message: currentMarker.message,
-      lat: currentMarker.lat,
-      lng: currentMarker.lng,
-      timestamp: new Date().getTime()
-    });
+    if (currentMarker.isSave) {
+      currentMarker.isSave = false;
+      console.log(currentMarker);
+      this.lastIndex = -1;
+      this.notesService.saveNote({
+        message: currentMarker.message,
+        lat: currentMarker.lat,
+        lng: currentMarker.lng,
+        isPublic: currentMarker.isPublic,
+        timestamp: new Date().getTime()
+      });
+    }
   }
 }
