@@ -10,11 +10,7 @@
       <input type="checkbox" [(ngModel)]="m.isPublic" />
     </agm-info-window>
   </agm-marker>
-  <agm-marker (markerClick)="clickedMarker(presentLocation, i)" [latitude]="presentLocation.lat" [longitude]="presentLocation.lng"
-    [markerDraggable]="false" [openInfoWindow]="presentLocation.isOpen" [iconUrl]="presentLocation.iconUrl">
-    <agm-info-window [isOpen]="presentLocation.isOpen">
-      <input type="text" required/>
-    </agm-info-window>
+  <agm-marker (markerClick)="clickedMarker(presentLocation, i)" [latitude]="presentLocation.lat" [longitude]="presentLocation.lng" [openInfoWindow]="presentLocation.isOpen" [iconUrl]="presentLocation.iconUrl">
   </agm-marker>
 </agm-map>
 <button type="button" class="locate-me-button" (click)="setCurrentPosition()">
