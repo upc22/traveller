@@ -45,10 +45,10 @@ $animation-time: 0.5s;
     }
     .notes {
         padding: 10px;
-        max-height: calc(100vh - 128px);
+        max-height: calc(100vh - 150px);
         overflow-y: auto;
         div {
-            background:#ececec;
+            background: #ececec;
             width: 100%;
             padding-bottom: 15px;
             margin-bottom: 12px;
