@@ -6,9 +6,10 @@
         </div>
         <div class="notes">
             <div *ngFor="let note of notes">
-                <img *ngIf="note.image" [src]="note.image" [alt]="note.title" />
                 <h4>{{note.title}}</h4>
                 <p class="note-description"> {{note.message}}</p>
+                <img *ngIf="note.imageUrl" [src]="note.imageUrl" [alt]="note.title" />
+                
             </div>
         </div>
         <!--<p class="blank-message" [hidden]="noNotes">No Notes Found!</p>-->

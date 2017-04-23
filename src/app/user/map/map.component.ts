@@ -180,8 +180,14 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  uploadImage(file) {
-    const imageRef = this.imagesRef.child(new Date().getTime().toString() + '.jpg');
+  uploadImage(file, index) {
+    const marker = this.markers[index];
+    const fileName = new Date().getTime().toString() + '.jpg';
+    marker.images = (marker.images) ? (marker.images + ',' + fileName) : fileName;
+    const imageRef = this.imagesRef.child(fileName);
+    imageRef.put(file).then(() => {
+      console.log('Upload done.');
+    });
   }
 
   ngOnDestroy(): void {
