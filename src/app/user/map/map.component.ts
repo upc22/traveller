@@ -94,6 +94,7 @@ export class MapComponent implements OnInit, OnDestroy {
       isOpen: true,
       isSave: false,
       isPublic: true,
+      title:'',
       message: ''
     });
     this.lastIndex = this.markers.length - 1;
