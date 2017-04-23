@@ -9,15 +9,15 @@ export class NoteComponent implements OnInit {
 
   @Input() marker;
   @Output() saveNote = new EventEmitter();
-  @Output() keydown = new EventEmitter();
   @Output() imagePlaced = new EventEmitter<{}>();
+  @Output() liked = new EventEmitter();
 
-  editable: boolean = false;
+  editable = false;
 
   constructor() { }
 
   ngOnInit() {
-    if(!this.marker.title && !this.marker.message){
+    if (!this.marker.title && !this.marker.message) {
       this.editable = true;
     }
   }
@@ -28,11 +28,11 @@ export class NoteComponent implements OnInit {
     }
   }
 
-  handleKeyDown(evt) {
-    this.keydown.emit(evt);
-  }
-
   imageUpload(evt) {
     this.imagePlaced.emit(evt.file);
+  }
+
+  sendLike() {
+    this.liked.emit();
   }
 }
