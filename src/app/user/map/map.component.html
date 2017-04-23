@@ -4,6 +4,7 @@
     <agm-info-window [isOpen]="m.isOpen" [class]="info-window" (infoWindowClose)="infoWindowClose(i)">
       <input type="text" id="userRemarks" [(ngModel)]="m.message" required/>
       <button kendoButton [icon]="'check'" (click)="saveNote(i)"></button>
+      <input type="checkbox" [(ngModel)]="m.isPublic" />
     </agm-info-window>
   </agm-marker>
 </agm-map>

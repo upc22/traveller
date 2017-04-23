@@ -18,7 +18,7 @@ export class MapComponent implements OnInit {
 
   constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService) { }
   ngOnInit(): void {
-    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
+    this.notesService.fetchNotes().subscribe((notes) => this.markers.concat(notes));
   }
 
   private setCurrentPosition() {
@@ -37,6 +37,7 @@ export class MapComponent implements OnInit {
       lat: evt.coords.lat,
       lng: evt.coords.lng,
       isOpen: true,
+      isPublic: true,
       message: ''
     });
     this.lastIndex = this.markers.length - 1;
@@ -74,10 +75,12 @@ export class MapComponent implements OnInit {
     const currentMarker = this.markers[index];
     currentMarker.isOpen = false;
     this.lastIndex = -1;
+    console.log(currentMarker);
     this.notesService.saveNote({
       message: currentMarker.message,
       lat: currentMarker.lat,
       lng: currentMarker.lng,
+      isPublic: currentMarker.isPublic,
       timestamp: new Date().getTime()
     });
   }
