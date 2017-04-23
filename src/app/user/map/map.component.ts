@@ -124,7 +124,8 @@ export class MapComponent implements OnInit, OnDestroy {
       isShow: false,
       isPublic: true,
       title: '',
-      message: ''
+      message: '',
+      iconUrl: 'assets/images/new-marker.png'
     };
   }
 
