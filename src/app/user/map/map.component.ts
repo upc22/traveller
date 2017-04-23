@@ -19,7 +19,11 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @Output() toggleNav = new EventEmitter<boolean>();
 
   markers = [];
-  presentLocation = {};
+  presentLocation = {
+    lat: 0,
+    lng: 0,
+    isOpen: true
+  };
   lat = 0;
   lng = 0;
   zoom = 2;
