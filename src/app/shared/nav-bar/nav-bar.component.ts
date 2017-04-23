@@ -12,6 +12,8 @@ import { AngularFire } from 'angularfire2';
 export class NavBarComponent implements OnInit, OnDestroy {
 
   @Output() showNav = new EventEmitter<boolean>();
+  @Output() itemClicked = new EventEmitter<boolean>();
+
   private notes = [];
   private notesSubscription: Subscription;
   private imagesRef;
@@ -37,6 +39,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   closeNav() {
     this.showNav.emit(false);
+  }
+
+  handleNoteClick(note) {
+    this.itemClicked.emit(note);
   }
 
   ngOnDestroy(): void {
