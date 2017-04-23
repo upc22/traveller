@@ -8,7 +8,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { MapComponent } from 'app/user/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { FormsModule } from '@angular/forms';
-
+import { GoogleMapsAPIWrapper } from '@agm/core';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +19,6 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   declarations: [HomeComponent, MapComponent],
-  providers: [NotesService]
+  providers: [NotesService, GoogleMapsAPIWrapper]
 })
 export class UserModule { }
