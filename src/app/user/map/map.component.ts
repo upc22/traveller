@@ -15,7 +15,7 @@ declare var google;
 })
 export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
-  @Input() selectedNote: {};
+  @Input() selectedNote: any;
   @Output() toggleNav = new EventEmitter<boolean>();
 
   markers = [];
@@ -27,7 +27,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     lat: { f: 0, b: 0 },
     lng: { f: 0, b: 0 },
   };
-  newMarker: {};
+  newMarker: any;
   notesSubscription: Subscription;
   currentFile;
 
