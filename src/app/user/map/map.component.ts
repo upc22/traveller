@@ -66,6 +66,7 @@ export class MapComponent implements OnInit, OnDestroy {
       case 'administrative_area_level_2': return 9;
       case 'administrative_area_level_1': return 7;
       case 'country': return 5;
+      default: return 8;
     }
   }
 
