@@ -26,6 +26,7 @@ export class MapComponent implements OnInit {
   constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService, private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone) { }
   ngOnInit(): void {
+    this.setCurrentPosition();
     this.notesService.fetchNotes().subscribe((notes) => this.markers = notes.slice(0, 20));
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -59,6 +60,8 @@ export class MapComponent implements OnInit {
         this.presentLocation['iconUrl'] = 'assets/images/my-location.png';
       });
     }
+    this.lat = 0;
+    this.lng = 0;
   }
 
   mapClicked(evt) {
