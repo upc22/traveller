@@ -24,7 +24,7 @@
     <p class="note-description"> {{marker.message}}</p>
     <img *ngIf="marker?.imageUrl" [src]="marker?.imageUrl" [alt]="marker?.title" />    
     <div>
-        <button kendoButton [icon]="'favorite-outline'"></button>
+        <button kendoButton [icon]="'favorite-outline'" (click)="sendLike()"></button><span [innerText]="marker.likes"></span>
         <button kendoButton [icon]="'delete'"></button>
     </div>
 </div>
