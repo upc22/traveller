@@ -7,7 +7,7 @@
         <div class="notes">
             <div *ngFor="let note of notes">
                 <img *ngIf="note.image" [src]="note.image" [alt]="note.title" />
-                <!--<h4>{{note.title}}</h4>-->
+                <h4>{{note.title}}</h4>
                 <p class="note-description"> {{note.message}}</p>
             </div>
         </div>

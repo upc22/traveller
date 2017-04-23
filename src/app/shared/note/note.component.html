@@ -1,0 +1,30 @@
+<div class="note-window" *ngIf="editable">
+    <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm.value)">
+        <div class="row">
+            <label for="title"></label>
+            <input type="text" placeholder="Title" name="title" [(ngModel)]="marker.title" required />
+        </div>
+        <div class="row">
+            <label for="summary"></label>
+            <textarea placeholder="Summary" name="summary" [(ngModel)]="marker.message" required></textarea>
+        </div>
+        <div class="row switch">
+            <label for="isPublic">{{marker.isPublic? "Public" : "Private"}}</label>
+            <ui-switch name="isPublic" [(ngModel)]="marker.isPublic" color="green" size="small"></ui-switch>
+        </div>
+        <div class="image-upload">
+            <image-upload [max]="5" [buttonCaption]="'Upload Moments'" (onFileUploadFinish)="imageUpload($event)"></image-upload>
+        </div>
+        <button kendoButton [icon]="'add'" type="submit">Add Note</button>
+    </form>
+</div>
+
+<div class="note-card" *ngIf="!editable">
+    <img *ngIf="marker?.image" [src]="note?.image" [alt]="note?.title" />
+    <h4>{{marker.title}}</h4>
+    <p class="note-description"> {{marker.message}}</p>
+    <div>
+        <button kendoButton [icon]="'favorite-outline'"></button>
+        <button kendoButton [icon]="'delete'"></button>
+    </div>
+</div>
