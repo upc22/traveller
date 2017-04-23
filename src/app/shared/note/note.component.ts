@@ -22,7 +22,8 @@ export class NoteComponent implements OnInit {
     }
   }
 
-  submitNote(form) {
+  submitNote($event, form) {
+    $event.preventDefault();
     if (form.valid) {
       this.saveNote.emit();
     }

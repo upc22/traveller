@@ -1,5 +1,5 @@
 <div class="note-window" *ngIf="editable">
-    <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm)">
+    <form #noteForm="ngForm" (ngSubmit)="submitNote($event, noteForm)">
         <div class="row">
             <label for="title"></label>
             <input type="text" placeholder="Title" name="title" [(ngModel)]="marker.title" required />

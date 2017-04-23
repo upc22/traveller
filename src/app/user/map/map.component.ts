@@ -176,7 +176,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     const currentMarker = this.newMarker;
     currentMarker['isOpen'] = false;
     if (currentMarker['message'] || currentMarker['title']) {
-      const fileName = new Date().getTime().toString() + '.jpg';
+      const fileName = this.currentFile ? new Date().getTime().toString() + '.jpg' : null;
       this.notesService.saveNote({
         title: currentMarker['title'],
         message: currentMarker['message'],
@@ -186,10 +186,12 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
         timestamp: new Date().getTime(),
         images: fileName
       });
-      const imageRef = this.imagesRef.child(fileName);
-      imageRef.put(this.currentFile).then(() => {
-        console.log('Upload done.');
-      });
+      if (fileName) {
+        const imageRef = this.imagesRef.child(fileName);
+        imageRef.put(this.currentFile).then(() => {
+          console.log('Upload done.');
+        });
+      }
       this.newMarker['isRemove'] = true;
     }
   }
