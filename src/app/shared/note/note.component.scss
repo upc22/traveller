@@ -20,8 +20,10 @@
         text-align: center;
         vertical-align: super;
     }
-    input {
-        width: 94%;
+    input,
+    textarea {
+        font-family: Arial, Helvetica, sans-serif;
+        width: 90%;
         border: none;
         outline: none;
         padding: 10px;
@@ -30,6 +32,7 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         padding: 10px;
         margin-top: 20px;
+        margin-left: 62%;
         color: #fff;
         background: #33cc99;
         border-radius: 2px;

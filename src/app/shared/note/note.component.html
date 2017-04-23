@@ -6,7 +6,7 @@
         </div>
         <div class="row">
             <label for="summary"></label>
-            <input type="text" placeholder="Summary" name="summary" [(ngModel)]="marker.message" (keydown)="handleKeyDown($event)" />
+            <textarea placeholder="Summary" name="summary" [(ngModel)]="marker.message" (keydown)="handleKeyDown($event)"></textarea>
         </div>
         <div class="row switch">
             <label for="isPublic">{{marker.isPublic? "Public" : "Private"}}</label>
