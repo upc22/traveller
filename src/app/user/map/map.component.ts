@@ -115,8 +115,9 @@ export class MapComponent implements OnInit, OnDestroy {
       isOpen: true,
       isSave: false,
       isPublic: true,
-      title:'',
-      message: ''
+      title: '',
+      message: '',
+      iconUrl: 'assets/images/new-marker.png'
     });
     this.lastIndex = this.markers.length - 1;
   }
@@ -170,7 +171,7 @@ export class MapComponent implements OnInit, OnDestroy {
       console.log(currentMarker);
       this.lastIndex = -1;
       this.notesService.saveNote({
-        title:currentMarker.title,
+        title: currentMarker.title,
         message: currentMarker.message,
         lat: currentMarker.lat,
         lng: currentMarker.lng,

@@ -2,7 +2,7 @@
     <input placeholder="Search for a Place" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [(ngModel)]="searchControl">
 </div>
 <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)" [scrollwheel]="true" [zoom]="zoom" #map [disableDoubleClickZoom]="true" (boundsChange)="getBounds($event)">
-    <agm-marker *ngFor="let m of markers | filterMarkers: bounds.lng.b:bounds.lng.f:bounds.lat.f:bounds.lat.b; let i = index" (markerClick)="clickedMarker(m, i)" [latitude]="m.lat" [longitude]="m.lng" [markerDraggable]="false" [openInfoWindow]="m.isOpen">
+    <agm-marker *ngFor="let m of markers | filterMarkers: bounds.lng.b:bounds.lng.f:bounds.lat.f:bounds.lat.b; let i = index" (markerClick)="clickedMarker(m, i)" [latitude]="m.lat" [longitude]="m.lng" [markerDraggable]="false" [openInfoWindow]="m.isOpen" [iconUrl]="m.iconUrl">
         <agm-info-window [isOpen]="m.isOpen" [class]="info-window" (infoWindowClose)="infoWindowClose(i)" maxWidth="300">
             <app-note [marker]="m" (keydown)="handleKeyDown($event, i)" (saveNote)="saveNote(i)" (imagePlaced)="uploadImage($event)"></app-note>
         </agm-info-window>
