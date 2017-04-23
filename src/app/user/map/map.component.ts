@@ -46,7 +46,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
-          this.zoom = 15;
+          this.zoom = 5;
         });
       });
     });
