@@ -1,6 +1,9 @@
-import { Component, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { NotesService } from 'app/user/services/notes.service';
-import { GoogleMapsAPIWrapper } from '@agm/core';
+import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
+
+import { } from '@types/googlemaps';
+declare var google;
 
 @Component({
   selector: 'app-map',
@@ -10,15 +13,40 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
 export class MapComponent implements OnInit {
 
   markers = [];
+  presentLocation = {};
   @Output() toggleNav = new EventEmitter<boolean>();
-  lat = 51.678418;
-  lng = 7.809007;
-  zoom = 13;
+  lat = 0;
+  lng = 0;
+  zoom = 2;
   lastIndex = -1;
 
-  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService) { }
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
+  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService, private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) { }
   ngOnInit(): void {
-    this.notesService.fetchNotes().subscribe((notes) => this.markers.concat(notes));
+    this.notesService.fetchNotes().subscribe((notes) => {
+      this.markers = this.markers.concat(notes);
+    });
+    this.mapsAPILoader.load().then(() => {
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['(regions)']
+      });
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          this.lat = place.geometry.location.lat();
+          this.lng = place.geometry.location.lng();
+          this.zoom = 5;
+        });
+      });
+    });
   }
 
   private setCurrentPosition() {
@@ -26,7 +54,11 @@ export class MapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.zoom = 18;
+        this.zoom = 14;
+        this.presentLocation['lat'] = this.lat;
+        this.presentLocation['lng'] = this.lng;
+        this.presentLocation['message'] = '';
+        this.presentLocation['iconUrl'] = 'assets/images/my-location.png';
       });
     }
   }
@@ -37,6 +69,7 @@ export class MapComponent implements OnInit {
       lat: evt.coords.lat,
       lng: evt.coords.lng,
       isOpen: true,
+      isSave: false,
       isPublic: true,
       message: ''
     });
@@ -57,10 +90,19 @@ export class MapComponent implements OnInit {
   autoSaveDeleteNotes(index: number) {
     if (this.markers[index]) {
       if (!this.markers[index].message) {
-        this.markers.splice(index, 1);
+        this.deleteMarker(index);
       } else {
         this.saveNote(index);
       }
+    }
+  }
+
+  handleKeyDown($event, index) {
+    const marker = this.markers[index];
+    marker.isSave = true;
+    if ($event.keyCode === 13) {
+      marker.isOpen = false;
+      this.autoSaveDeleteNotes(index);
     }
   }
 
@@ -71,17 +113,24 @@ export class MapComponent implements OnInit {
     this.toggleNav.emit(true);
   }
 
+  deleteMarker(index) {
+    this.markers.splice(index, 1);
+  }
+
   saveNote(index: number) {
     const currentMarker = this.markers[index];
     currentMarker.isOpen = false;
-    this.lastIndex = -1;
-    console.log(currentMarker);
-    this.notesService.saveNote({
-      message: currentMarker.message,
-      lat: currentMarker.lat,
-      lng: currentMarker.lng,
-      isPublic: currentMarker.isPublic,
-      timestamp: new Date().getTime()
-    });
+    if (currentMarker.isSave) {
+      currentMarker.isSave = false;
+      console.log(currentMarker);
+      this.lastIndex = -1;
+      this.notesService.saveNote({
+        message: currentMarker.message,
+        lat: currentMarker.lat,
+        lng: currentMarker.lng,
+        isPublic: currentMarker.isPublic,
+        timestamp: new Date().getTime()
+      });
+    }
   }
 }

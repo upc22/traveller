@@ -73,7 +73,7 @@ export class NotesService {
   }
 
   private checkFetchCount(observer) {
-    if (this.fetchCount = this.FETCHED) {
+    if (this.fetchCount === this.FETCHED) {
       this.fetchCount = 0;
       observer.complete();
       this.process.next(Action.QueryStop);
