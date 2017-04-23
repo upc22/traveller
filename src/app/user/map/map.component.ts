@@ -100,10 +100,12 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
   setZoomLevel(type: string) {
     switch (type) {
-      case 'sublocality_level_1': return 15;
-      case 'locality': return 13;
-      case 'administrative_area_level_2': return 9;
-      case 'administrative_area_level_1': return 7;
+      case 'street_number': return 20;
+      case 'route': return 19;
+      case 'locality': return 15;
+      case 'sublocality_level_1': return 17;
+      case 'administrative_area_level_2': return 11;
+      case 'administrative_area_level_1': return 9;
       case 'country': return 5;
       default: return 8;
     }
@@ -114,7 +116,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.zoom = 14;
+        this.zoom = 15;
         this.presentLocation['lat'] = this.lat;
         this.presentLocation['lng'] = this.lng;
         this.presentLocation['message'] = '';

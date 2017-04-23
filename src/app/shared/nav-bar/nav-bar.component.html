@@ -7,8 +7,8 @@
         <div class="notes">
             <div *ngFor="let note of notes" (click)="handleNoteClick(note)">
                 <h4>{{note.title}}</h4>
-                <!--<p class="note-description"> {{note.message}}</p>-->
-                <!--<img *ngIf="note.imageUrl" [src]="note.imageUrl" [alt]="note.title" />-->
+                <p class="note-description"> {{note.message}}</p>
+                <img *ngIf="note.imageUrl" [src]="note.imageUrl" [alt]="note.title" />
             </div>
         </div>
         <p class="blank-message" [hidden]="notes.length">No Notes Found!</p>
