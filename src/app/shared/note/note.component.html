@@ -13,7 +13,7 @@
             <ui-switch name="isPublic" [(ngModel)]="marker.isPublic" color="green" size="small"></ui-switch>
         </div>
         <div class="image-upload">
-            <image-upload [max]="5" [buttonCaption]="'Upload Moments'"></image-upload>
+            <image-upload [max]="5" [buttonCaption]="'Upload Moments'" (onFileUploadFinish)="imageUpload($event)"></image-upload>
         </div>
         <button kendoButton [icon]="'add'" type="submit">Add Note</button>
     </form>
