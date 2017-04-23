@@ -7,13 +7,20 @@
   }
   .row.switch {
     margin: 20px 0;
-    display: flex;
-    justify-content: space-between;
+    ui-switch {
+      margin-left: 20px;
+    }
   }
   .image-upload {
     max-height: 185px;
     overflow-x: hidden;
     overflow-y: auto;
+    .file-upload {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      
+    }
   }
   label {
     font-weight: bold;
@@ -30,10 +37,11 @@
     resize: none;
   }
   button {
+    display: flex;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 10px;
+    margin: auto;
     margin-top: 20px;
-    margin-left: 62%;
     color: #fff;
     background: #33cc99;
     border-radius: 2px;

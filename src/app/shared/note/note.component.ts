@@ -22,12 +22,13 @@ export class NoteComponent implements OnInit {
     }
   }
 
-  submitNote(value) {
-    console.log(value);
-    this.saveNote.emit();
+  submitNote(form) {
+    if (form.valid) {
+      this.saveNote.emit();
+    }
   }
 
-  handleKeyDown(evt){
+  handleKeyDown(evt) {
     this.keydown.emit(evt);
   }
 

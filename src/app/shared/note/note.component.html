@@ -1,12 +1,12 @@
 <div class="note-window" *ngIf="editable">
-    <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm.value)">
+    <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm)">
         <div class="row">
             <label for="title"></label>
             <input type="text" placeholder="Title" name="title" [(ngModel)]="marker.title" required />
         </div>
         <div class="row">
             <label for="summary"></label>
-            <textarea placeholder="Summary" name="summary" [(ngModel)]="marker.message" required></textarea>
+            <textarea placeholder="Summary" name="summary" [(ngModel)]="marker.message"></textarea>
         </div>
         <div class="row switch">
             <label for="isPublic">{{marker.isPublic? "Public" : "Private"}}</label>
