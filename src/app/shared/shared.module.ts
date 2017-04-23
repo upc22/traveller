@@ -7,12 +7,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MenuComponent } from './menu/menu.component';
+import { NoteComponent } from "./note/note.component";
 
 @NgModule({
   imports:[ CommonModule, FormsModule, ButtonsModule, MaterialModule ],
   declarations: [
     NavBarComponent,
-    MenuComponent
+    MenuComponent,
+    NoteComponent
   ],
   exports: [
     NavBarComponent,
