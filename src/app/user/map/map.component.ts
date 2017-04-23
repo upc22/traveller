@@ -14,6 +14,7 @@ declare var google;
 export class MapComponent implements OnInit {
 
   markers = [];
+  presentLocation = {};
   @Output() toggleNav = new EventEmitter<boolean>();
   lat = 0;
   lng = 0;
@@ -52,7 +53,11 @@ export class MapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.zoom = 18;
+        this.zoom = 14;
+        this.presentLocation['lat'] = this.lat;
+        this.presentLocation['lng'] = this.lng;
+        this.presentLocation['message'] = '';
+        this.presentLocation['iconUrl'] = 'assets/images/my-location.png';
       });
     }
   }
