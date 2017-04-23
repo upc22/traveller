@@ -9,7 +9,6 @@ export class NoteComponent implements OnInit {
 
   @Input() marker;
   @Output() saveNote = new EventEmitter();
-  @Output() keydown = new EventEmitter();
   @Output() imagePlaced = new EventEmitter<{}>();
 
   editable: boolean = false;
@@ -25,10 +24,6 @@ export class NoteComponent implements OnInit {
   submitNote(value) {
     console.log(value);
     this.saveNote.emit();
-  }
-
-  handleKeyDown(evt){
-    this.keydown.emit(evt);
   }
 
   imageUpload(evt) {
