@@ -1,6 +1,26 @@
-<!--<md-card class="card">
-    <md-card-title class="md-title">Hello</md-card-title>
-    <md-card-content>
-        <p>Angular Attack</p>
-    </md-card-content>
-</md-card>-->
+<div class="note-window">
+    <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm.value)">
+        <div class="row">
+            <label for="title"></label>
+            <input type="text" placeholder="Title" name="title" [(ngModel)]="marker.title">
+        </div>
+        <div class="row">
+            <label for="summary"></label>
+            <input type="text" placeholder="Summary" name="summary" [(ngModel)]="marker.message" (keydown)="handleKeyDown($event)" />
+        </div>
+        <div class="row switch">
+            <label for="isPublic">{{marker.isPublic? "Public" : "Private"}}</label>
+            <ui-switch name="isPublic" [(ngModel)]="marker.isPublic" color="green" size="small"></ui-switch>
+        </div>
+        <div class="image-upload">
+            <image-upload [max]="5" [buttonCaption]="'Upload Moments'"></image-upload>
+        </div>
+        <button kendoButton [icon]="'add'" type="submit">Add Note</button>
+    </form>
+</div>
+
+<!--<div class="note-card">
+    <img *ngIf="marker?.image" [src]="note?.image" [alt]="note?.title" />
+    <h4>{{marker.title}}</h4>
+    <p class="note-description"> {{marker.message}}</p>
+</div>-->
