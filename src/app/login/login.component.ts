@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
-import { AngularFire, FirebaseListObservable, AuthMethods, AuthProviders } from 'angularfire2';
 import { Router } from '@angular/router';
+import { AngularFire, FirebaseListObservable, AuthMethods, AuthProviders } from 'angularfire2';
 
 @Component({
   selector: 'app-login',
@@ -10,32 +10,19 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private af: AngularFire, private _router: Router) {
-    this.af.auth.subscribe((auth) => {
-      if (auth) {
-        const userRef = af.database.object('/users/' + auth.uid);
-        userRef.update({
-          name: auth.auth.displayName
-        });
-        this._router.navigate(['/' + auth.auth.displayName.split(' ')[0].toLowerCase()]);
-      }
-    });
-  }
+  constructor(private af: AngularFire, private router: Router) {}
 
   ngOnInit() {
   }
 
-  loginWithGoogle() {
+  login(authProvider: string) {
     this.af.auth.login({
-      provider: AuthProviders.Google,
+      provider: authProvider === 'google' ? AuthProviders.Google : AuthProviders.Facebook,
       method: AuthMethods.Popup
+    }).then(response => {
+      this.router.navigate(['/' + response.auth.displayName.split(' ')[0].toLowerCase()]);
+    }).catch(err => {
+      console.log(err);
     });
   }
-  loginWithFB() {
-    this.af.auth.login({
-      provider: AuthProviders.Facebook,
-      method: AuthMethods.Popup
-    });
-  }
-
 }
