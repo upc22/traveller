@@ -1,77 +1,80 @@
 .note-window {
-  background: #EEE;
-  padding: 20px;
-  margin: 10px 0;
-  .row {
+    background: #EEE;
+    padding: 20px;
     margin: 10px 0;
-  }
-  .row.switch {
-    margin: 20px 0;
-    display: flex;
-    justify-content: space-between;
-  }
-  .image-upload {
-    max-height: 185px;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  label {
-    font-weight: bold;
-    text-align: center;
-    vertical-align: super;
-  }
-  input,
-  textarea {
-    font-family: Arial, Helvetica, sans-serif;
-    width: 92%;
-    border: none;
-    outline: none;
-    padding: 10px;
-    resize: none;
-  }
-  button {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    margin-top: 20px;
-    margin-left: 62%;
-    color: #fff;
-    background: #33cc99;
-    border-radius: 2px;
-  }
+    .row {
+        margin: 10px 0;
+    }
+    .row.switch {
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    .image-upload {
+        max-height: 185px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    label {
+        font-weight: bold;
+        text-align: center;
+        vertical-align: super;
+    }
+    input,
+    textarea {
+        font-family: Arial, Helvetica, sans-serif;
+        width: 92%;
+        border: none;
+        outline: none;
+        padding: 10px;
+        resize: none;
+    }
+    button {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        margin-top: 20px;
+        margin-left: 62%;
+        color: #fff;
+        background: #33cc99;
+        border-radius: 2px;
+    }
 }
 
 .note-card {
-  width: 300px;
-  padding-bottom: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  >img {
-    height: 200px;
-    width: 100%;
-  }
-  h4 {
-    font-size: 1em;
-    padding: 15px 5px 5px 5px;
-  }
-  p {
-    font-size: 0.75em;
-    padding: 5px;
-  }
-  div {
-    padding: 15px 5px 0 5px;
-    button:nth-child(1) {
-      border: none;
-      outline: none;
-      background: #fff; //background: #5cb85c;
+    width: 300px;
+    padding-bottom: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    &:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
-    button:nth-child(2) {
-      border: none;
-      outline: none;
-      background: #fff; //background: #ec971f;
-      margin-left: 10px;
+    >img {
+        height: 200px;
+        width: 100%;
     }
-  }
+    h4 {
+        font-size: 1.5em;
+        padding: 15px 5px 5px 5px;
+    }
+    p {
+        font-size: 1em;
+        padding: 5px;
+    }
+    div {
+        padding: 15px 5px 0 5px;
+        button:nth-child(1) {
+            border: none;
+            outline: none;
+            background: #fff; //background: #5cb85c;
+        }
+        button:last-child {
+            border: none;
+            outline: none;
+            background: #fff; //background: #ec971f;
+            margin-left: 10px;
+        }
+        .favorite {
+            color: #f00;
+        }
+    }
 }

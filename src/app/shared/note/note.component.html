@@ -22,9 +22,9 @@
 <div class="note-card" *ngIf="!editable">
     <h4>{{marker.title}}</h4>
     <p class="note-description"> {{marker.message}}</p>
-    <img *ngIf="marker?.imageUrl" [src]="marker?.imageUrl" [alt]="marker?.title" />    
+    <img *ngIf="marker?.imageUrl" [src]="marker?.imageUrl" [alt]="marker?.title" />
     <div>
-        <button kendoButton [icon]="'favorite-outline'" (click)="sendLike()"></button><span [innerText]="marker.likes"></span>
+        <button kendoButton [icon]="isLiked" (click)="sendLike()" [class]="isLiked"></button><span [innerText]="likes"></span>
         <button kendoButton [icon]="'delete'"></button>
     </div>
 </div>

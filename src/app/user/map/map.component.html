@@ -4,7 +4,7 @@
 <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)" [scrollwheel]="true" [zoom]="zoom" #map [disableDoubleClickZoom]="true" (boundsChange)="getBounds($event)">
     <agm-marker *ngFor="let m of markers | filterMarkers: bounds.lng.b:bounds.lng.f:bounds.lat.f:bounds.lat.b; let i = index" (markerClick)="clickedMarker(m)" [latitude]="m.lat" [longitude]="m.lng" [markerDraggable]="false" [openInfoWindow]="m.isOpen" [iconUrl]="'assets/images/marker.png'">
         <agm-info-window [isOpen]="m.isOpen" [class]="info-window" maxWidth="300">
-            <app-note [marker]="m" (liked)="increaseLike(i)"></app-note>
+            <app-note [marker]="m"></app-note>
         </agm-info-window>
     </agm-marker>
     <agm-marker *ngIf="newMarker && newMarker.isShow" [latitude]="newMarker.lat" [longitude]="newMarker.lng" [markerDraggable]="false" [openInfoWindow]="newMarker.isOpen" [iconUrl]="'assets/images/marker.png'">

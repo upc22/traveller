@@ -10,10 +10,10 @@ export class NoteComponent implements OnInit {
   @Input() marker;
   @Output() saveNote = new EventEmitter();
   @Output() imagePlaced = new EventEmitter<{}>();
-  @Output() liked = new EventEmitter();
 
   editable: boolean = false;
-
+  isLiked = 'favorite-outline';
+  likes = 0;
   constructor() { }
 
   ngOnInit() {
@@ -32,6 +32,14 @@ export class NoteComponent implements OnInit {
   }
 
   sendLike() {
-    this.liked.emit();
+    if (this.isLiked === 'favorite-outline') {
+      this.isLiked = 'favorite';
+      this.likes++;
+    } else {
+      this.likes--;
+      this.isLiked = 'favorite-outline';
+
+    }
+    //this.liked.emit();
   }
 }
