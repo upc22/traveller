@@ -9,6 +9,7 @@ import { MapComponent } from 'app/user/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMapsAPIWrapper } from '@agm/core';
+import { FilterMarkersPipe } from './pipes/filter-markers.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +19,7 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
     ButtonsModule,
     FormsModule
   ],
-  declarations: [HomeComponent, MapComponent],
+  declarations: [HomeComponent, MapComponent, FilterMarkersPipe],
   providers: [NotesService, GoogleMapsAPIWrapper]
 })
 export class UserModule { }

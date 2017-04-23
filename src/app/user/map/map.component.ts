@@ -19,6 +19,10 @@ export class MapComponent implements OnInit, OnDestroy {
   lng = 0;
   zoom = 2;
   lastIndex = -1;
+  bounds = {
+    lat : {f: 0 , b : 0 },
+    lng : {f: 0 , b : 0 },
+  };
   private notesSubscription: Subscription;
 
   @ViewChild('search')
@@ -39,6 +43,11 @@ export class MapComponent implements OnInit, OnDestroy {
     this.notesSubscription = this.notesService.fetchNotes().subscribe((notes) => {
       this.markers = this.markers.concat(notes);
     });
+  }
+
+  private getBounds($event) {
+    this.bounds.lat = $event.f;
+    this.bounds.lng = $event.b;
   }
 
   private handleAutoComplete() {
