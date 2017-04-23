@@ -2,11 +2,11 @@
     <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm.value)">
         <div class="row">
             <label for="title"></label>
-            <input type="text" placeholder="Title" name="title" [(ngModel)]="marker.title">
+            <input type="text" placeholder="Title" name="title" [(ngModel)]="marker.title" required />
         </div>
         <div class="row">
             <label for="summary"></label>
-            <textarea placeholder="Summary" name="summary" [(ngModel)]="marker.message" (keydown)="handleKeyDown($event)"></textarea>
+            <textarea placeholder="Summary" name="summary" [(ngModel)]="marker.message" required></textarea>
         </div>
         <div class="row switch">
             <label for="isPublic">{{marker.isPublic? "Public" : "Private"}}</label>

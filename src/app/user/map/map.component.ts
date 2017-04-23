@@ -160,6 +160,7 @@ export class MapComponent implements OnInit, OnDestroy {
       console.log(currentMarker);
       this.lastIndex = -1;
       this.notesService.saveNote({
+        title:currentMarker.title,
         message: currentMarker.message,
         lat: currentMarker.lat,
         lng: currentMarker.lng,
