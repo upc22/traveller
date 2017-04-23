@@ -1,4 +1,6 @@
-<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [(ngModel)]="searchControl">
+<div class="search-box">
+    <input placeholder="Search for Place" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [(ngModel)]="searchControl">
+</div>
 <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)" [scrollwheel]="false" [zoom]="zoom">
     <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m, i)" [latitude]="m.lat" [longitude]="m.lng" [markerDraggable]="false" [openInfoWindow]="m.isOpen">
         <agm-info-window [isOpen]="m.isOpen" [class]="info-window" (infoWindowClose)="infoWindowClose(i)">
