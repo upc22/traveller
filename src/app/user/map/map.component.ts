@@ -126,7 +126,8 @@ export class MapComponent implements OnInit, OnDestroy {
       isPublic: true,
       title: '',
       message: '',
-      iconUrl: 'assets/images/new-marker.png'
+      iconUrl: 'assets/images/new-marker.png',
+      likes: 0
     };
   }
 
@@ -185,5 +186,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.notesSubscription.unsubscribe();
+  }
+
+  increaseLike(index) {
+    this.markers[index].likes += 1;
   }
 }
