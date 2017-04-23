@@ -20,7 +20,9 @@
         text-align: center;
         vertical-align: super;
     }
-    input {
+    input,
+    textarea {
+        font-family: Arial, Helvetica, sans-serif;
         width: 90%;
         border: none;
         outline: none;
