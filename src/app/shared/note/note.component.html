@@ -20,9 +20,9 @@
 </div>
 
 <div class="note-card" *ngIf="!editable">
-    <img *ngIf="marker?.image" [src]="note?.image" [alt]="note?.title" />
     <h4>{{marker.title}}</h4>
     <p class="note-description"> {{marker.message}}</p>
+    <img *ngIf="marker?.imageUrl" [src]="marker?.imageUrl" [alt]="marker?.title" />    
     <div>
         <button kendoButton [icon]="'favorite-outline'"></button>
         <button kendoButton [icon]="'delete'"></button>

@@ -22,11 +22,12 @@ export class MapComponent implements OnInit, OnDestroy {
   lng = 0;
   zoom = 2;
   bounds = {
-    lat : {f: 0 , b : 0 },
-    lng : {f: 0 , b : 0 },
+    lat: { f: 0, b: 0 },
+    lng: { f: 0, b: 0 },
   };
   newMarker: {};
   private notesSubscription: Subscription;
+  private currentFile;
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
@@ -39,11 +40,11 @@ export class MapComponent implements OnInit, OnDestroy {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private af: AngularFire) {
-      this.af.auth.subscribe((auth => {
-        this.auth = auth;
-        this.imagesRef = firebase.storage().ref('images/' + auth.uid);
-      }));
-    }
+    this.af.auth.subscribe((auth => {
+      this.auth = auth;
+      this.imagesRef = firebase.storage().ref('images/' + auth.uid);
+    }));
+  }
 
   ngOnInit(): void {
     this.setCurrentPosition();
@@ -139,11 +140,17 @@ export class MapComponent implements OnInit, OnDestroy {
     this.newMarker = null;
   }
 
-  clickedMarker(marker: {}) {
+  clickedMarker(marker: any) {
     this.closeOtherInfoWindow();
     this.newMarker = null;
     marker['isOpen'] = true;
     this.toggleNav.emit(true);
+    if (marker.images) {
+      this.imagesRef.child(marker.images).getDownloadURL().then((url) => {
+        marker.imageUrl = url;
+      });
+    }
+
   }
 
   deleteMarker(index) {
@@ -154,29 +161,29 @@ export class MapComponent implements OnInit, OnDestroy {
     const currentMarker = this.newMarker;
     currentMarker['isOpen'] = false;
     if (currentMarker['message'] || currentMarker['title']) {
+      const fileName = new Date().getTime().toString() + '.jpg';
       this.notesService.saveNote({
         title: currentMarker['title'],
         message: currentMarker['message'],
         lat: currentMarker['lat'],
         lng: currentMarker['lng'],
         isPublic: currentMarker['isPublic'],
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
+        images: fileName
+      });
+      const imageRef = this.imagesRef.child(fileName);
+      imageRef.put(this.currentFile).then(() => {
+        console.log('Upload done.');
       });
       this.newMarker['isRemove'] = true;
     }
   }
 
   uploadImage(file, index) {
-    const marker = this.markers[index];
-    const fileName = new Date().getTime().toString() + '.jpg';
-    marker.images = (marker.images) ? (marker.images + ',' + fileName) : fileName;
-    const imageRef = this.imagesRef.child(fileName);
-    imageRef.put(file).then(() => {
-      console.log('Upload done.');
-    });
+    this.currentFile = file;
   }
 
   ngOnDestroy(): void {
-      this.notesSubscription.unsubscribe();
-    }
+    this.notesSubscription.unsubscribe();
+  }
 }
