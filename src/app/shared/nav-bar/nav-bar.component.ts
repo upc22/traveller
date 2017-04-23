@@ -14,7 +14,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   @Output() showNav = new EventEmitter<boolean>();
   @Output() itemClicked = new EventEmitter<boolean>();
 
-  private notes = [];
+  notes = [];
   private notesSubscription: Subscription;
   private imagesRef;
 
