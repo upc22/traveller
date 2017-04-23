@@ -5,21 +5,12 @@
             <span class="k-icon k-i-close" (click)="closeNav()"></span>
         </div>
         <div class="notes">
-            <div *ngFor="let note of notes">
+            <div *ngFor="let note of notes" (click)="handleNoteClick(note)">
                 <h4>{{note.title}}</h4>
-                <p class="note-description"> {{note.message}}</p>
-                <img *ngIf="note.imageUrl" [src]="note.imageUrl" [alt]="note.title" />
-                
+                <!--<p class="note-description"> {{note.message}}</p>-->
+                <!--<img *ngIf="note.imageUrl" [src]="note.imageUrl" [alt]="note.title" />-->
             </div>
         </div>
-        <!--<p class="blank-message" [hidden]="noNotes">No Notes Found!</p>-->
-        <!--<form class="note-form" #noteForm="ngForm" (ngSubmit)="postNote(noteForm.value)">
-            <label for="title" class="accessibility">Title</label>
-            <input type="text" placeholder="Title" name="title"  ngModel />
-            <label for="des" class="accessibility">Description</label>
-            <textarea required rows="4" cols="50" placeholder="Please write a description..." name="des" ngModel></textarea>
-            <label for="submit-button" class="accessibility">Submit Button</label>
-            <input type="submit" name="submit-button" class="btn-submit" value="SUBMIT" />
-        </form>-->
+        <p class="blank-message" [hidden]="notes.length">No Notes Found!</p>
     </div>
 </nav>

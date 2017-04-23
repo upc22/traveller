@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, Output, EventEmitter, NgZone, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { NotesService } from 'app/user/services/notes.service';
 import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
@@ -13,11 +13,13 @@ declare var google;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, OnDestroy {
+export class MapComponent implements OnInit, OnDestroy, OnChanges {
+
+  @Input() selectedNote: {};
+  @Output() toggleNav = new EventEmitter<boolean>();
 
   markers = [];
   presentLocation = {};
-  @Output() toggleNav = new EventEmitter<boolean>();
   lat = 0;
   lng = 0;
   zoom = 2;
@@ -26,14 +28,14 @@ export class MapComponent implements OnInit, OnDestroy {
     lng: { f: 0, b: 0 },
   };
   newMarker: {};
-  private notesSubscription: Subscription;
-  private currentFile;
+  notesSubscription: Subscription;
+  currentFile;
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  private imagesRef;
-  private auth;
+  imagesRef;
+  auth;
 
   constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper,
     private notesService: NotesService,
@@ -52,7 +54,19 @@ export class MapComponent implements OnInit, OnDestroy {
     this.handleAutoComplete();
   }
 
-  private getNotes() {
+  ngOnChanges() {
+    this.focusToSelectedNote();
+  }
+
+  focusToSelectedNote() {
+    if (this.selectedNote) {
+      this.lat = this.selectedNote['lat'];
+      this.lng = this.selectedNote['lng'];
+      this.selectedNote = null;
+    }
+  }
+
+  getNotes() {
     this.notesSubscription = this.notesService.fetchNotes().subscribe((notes) => {
       this.markers = this.markers.concat(notes);
       if (this.newMarker && this.newMarker['isRemove']) {
@@ -61,12 +75,12 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getBounds($event) {
+  getBounds($event) {
     this.bounds.lat = $event.f;
     this.bounds.lng = $event.b;
   }
 
-  private handleAutoComplete() {
+  handleAutoComplete() {
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
       autocomplete.addListener('place_changed', () => {
@@ -84,7 +98,7 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  private setZoomLevel(type: string) {
+  setZoomLevel(type: string) {
     switch (type) {
       case 'sublocality_level_1': return 15;
       case 'locality': return 13;
@@ -95,7 +109,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setCurrentPosition() {
+  setCurrentPosition() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
@@ -162,7 +176,7 @@ export class MapComponent implements OnInit, OnDestroy {
     const currentMarker = this.newMarker;
     currentMarker['isOpen'] = false;
     if (currentMarker['message'] || currentMarker['title']) {
-      const fileName = new Date().getTime().toString() + '.jpg';
+      const fileName = this.currentFile ? new Date().getTime().toString() + '.jpg' : null;
       this.notesService.saveNote({
         title: currentMarker['title'],
         message: currentMarker['message'],
@@ -172,10 +186,12 @@ export class MapComponent implements OnInit, OnDestroy {
         timestamp: new Date().getTime(),
         images: fileName
       });
-      const imageRef = this.imagesRef.child(fileName);
-      imageRef.put(this.currentFile).then(() => {
-        console.log('Upload done.');
-      });
+      if (fileName) {
+        const imageRef = this.imagesRef.child(fileName);
+        imageRef.put(this.currentFile).then(() => {
+          console.log('Upload done.');
+        });
+      }
       this.newMarker['isRemove'] = true;
     }
   }

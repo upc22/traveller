@@ -7,8 +7,9 @@
     }
     .row.switch {
         margin: 20px 0;
-        display: flex;
-        justify-content: space-between;
+        ui-switch {
+            margin-left: 20px;
+        }
     }
     .image-upload {
         max-height: 185px;

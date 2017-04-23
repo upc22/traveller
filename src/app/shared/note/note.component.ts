@@ -14,6 +14,7 @@ export class NoteComponent implements OnInit {
   editable: boolean = false;
   isLiked = 'favorite-outline';
   likes = 0;
+
   constructor() { }
 
   ngOnInit() {
@@ -22,9 +23,11 @@ export class NoteComponent implements OnInit {
     }
   }
 
-  submitNote(value) {
-    console.log(value);
-    this.saveNote.emit();
+  submitNote($event, form) {
+    $event.preventDefault();
+    if (form.valid) {
+      this.saveNote.emit();
+    }
   }
 
   imageUpload(evt) {
