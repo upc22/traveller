@@ -1,4 +1,4 @@
-<div class="note-window">
+<div class="note-window" *ngIf="editable">
     <form #noteForm="ngForm" (ngSubmit)="submitNote(noteForm.value)">
         <div class="row">
             <label for="title"></label>
@@ -19,8 +19,12 @@
     </form>
 </div>
 
-<!--<div class="note-card">
+<div class="note-card" *ngIf="!editable">
     <img *ngIf="marker?.image" [src]="note?.image" [alt]="note?.title" />
     <h4>{{marker.title}}</h4>
     <p class="note-description"> {{marker.message}}</p>
-</div>-->
+    <div>
+        <button kendoButton [icon]="'favorite-outline'"></button>
+        <button kendoButton [icon]="'delete'"></button>
+    </div>
+</div>

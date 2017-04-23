@@ -12,15 +12,14 @@ export class NoteComponent implements OnInit {
   @Output() keydown = new EventEmitter();
   @Output() imagePlaced = new EventEmitter<{}>();
 
-  private title: String;
-  private des: String;
-  private images: Array<string>;
-  private longitude: any;
-  private latitude: any;
+  editable: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
+    if(!this.marker.title && !this.marker.message){
+      this.editable = true;
+    }
   }
 
   submitNote(value) {
