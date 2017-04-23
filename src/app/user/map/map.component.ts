@@ -28,12 +28,20 @@ export class MapComponent implements OnInit, OnDestroy {
     private notesService: NotesService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone) { }
+
   ngOnInit(): void {
     this.setCurrentPosition();
+    this.getNotes();
+    this.handleAutoComplete();
+  }
+
+  private getNotes() {
     this.notesSubscription = this.notesService.fetchNotes().subscribe((notes) => {
       this.markers = this.markers.concat(notes);
     });
+  }
 
+  private handleAutoComplete() {
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ['(regions)']
@@ -45,17 +53,25 @@ export class MapComponent implements OnInit, OnDestroy {
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
-          this.zoom = 5;
+          this.zoom = this.setZoomLevel(place.address_components[0].types[0]);
         });
       });
     });
   }
 
+  private setZoomLevel(type: string) {
+    switch (type) {
+      case 'sublocality_level_1': return 15;
+      case 'locality': return 13;
+      case 'administrative_area_level_2': return 9;
+      case 'administrative_area_level_1': return 7;
+      case 'country': return 5;
+    }
+  }
+
   private setCurrentPosition() {
-    this.googleMapsAPIWrapper.getNativeMap().then((maps) => console.log(maps));
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
