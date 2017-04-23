@@ -1,8 +1,8 @@
-import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { NotesService } from 'app/user/services/notes.service';
 import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
-
 import { } from '@types/googlemaps';
+import { Subscription } from 'rxjs/Subscription';
 declare var google;
 
 @Component({
@@ -10,7 +10,7 @@ declare var google;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
 
   markers = [];
   presentLocation = {};
@@ -19,6 +19,7 @@ export class MapComponent implements OnInit {
   lng = 0;
   zoom = 2;
   lastIndex = -1;
+  private notesSubscription: Subscription;
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
@@ -29,7 +30,7 @@ export class MapComponent implements OnInit {
     private ngZone: NgZone) { }
   ngOnInit(): void {
     this.setCurrentPosition();
-    this.notesService.fetchNotes().subscribe((notes) => {
+    this.notesSubscription = this.notesService.fetchNotes().subscribe((notes) => {
       this.markers = this.markers.concat(notes);
     });
 
@@ -140,4 +141,8 @@ export class MapComponent implements OnInit {
       });
     }
   }
+
+  ngOnDestroy(): void {
+      this.notesSubscription.unsubscribe();
+    }
 }

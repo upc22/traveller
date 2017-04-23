@@ -56,7 +56,7 @@ export class NotesService {
     this.notesRef.subscribe((notes) => {
       observer.next(notes);
       this.fetchCount++;
-      this.checkFetchCount(observer);
+      // this.checkFetchCount(observer);
     }, (err) => {
       observer.error(err);
     });
@@ -66,7 +66,7 @@ export class NotesService {
     this.publicRef.subscribe((notes) => {
       observer.next(notes);
       this.fetchCount++;
-      this.checkFetchCount(observer);
+      // this.checkFetchCount(observer);
     }, (err) => {
       observer.error(err);
     });
