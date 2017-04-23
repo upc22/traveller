@@ -3,6 +3,9 @@ import { NotesService } from 'app/user/services/notes.service';
 import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 import { Subscription } from 'rxjs/Subscription';
+import { AngularFire } from 'angularfire2';
+import * as firebase from 'firebase';
+
 declare var google;
 
 @Component({
@@ -24,10 +27,19 @@ export class MapComponent implements OnInit, OnDestroy {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
+  private imagesRef;
+  private auth;
+
   constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper,
     private notesService: NotesService,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone) { }
+    private ngZone: NgZone,
+    private af: AngularFire) {
+      this.af.auth.subscribe((auth => {
+        this.auth = auth;
+        this.imagesRef = firebase.storage().ref('images/' + auth.uid);
+      }));
+    }
 
   ngOnInit(): void {
     this.setCurrentPosition();
@@ -156,6 +168,10 @@ export class MapComponent implements OnInit, OnDestroy {
         timestamp: new Date().getTime()
       });
     }
+  }
+
+  uploadImage(file) {
+    const imageRef = this.imagesRef.child(new Date().getTime().toString() + '.jpg');
   }
 
   ngOnDestroy(): void {

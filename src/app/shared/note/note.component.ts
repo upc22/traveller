@@ -9,7 +9,8 @@ export class NoteComponent implements OnInit {
 
   @Input() marker;
   @Output() saveNote = new EventEmitter();
-  @Output() keydown = new EventEmitter();  
+  @Output() keydown = new EventEmitter();
+  @Output() imagePlaced = new EventEmitter<{}>();
 
   private title: String;
   private des: String;
@@ -17,13 +18,12 @@ export class NoteComponent implements OnInit {
   private longitude: any;
   private latitude: any;
 
-
   constructor() { }
 
   ngOnInit() {
   }
 
-  submitNote(value){
+  submitNote(value) {
     console.log(value);
     this.saveNote.emit();
   }
@@ -32,6 +32,7 @@ export class NoteComponent implements OnInit {
     this.keydown.emit(evt);
   }
 
-  
-
+  imageUpload(evt) {
+    this.imagePlaced.emit(evt.file);
+  }
 }
