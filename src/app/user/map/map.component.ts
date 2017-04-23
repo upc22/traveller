@@ -23,13 +23,16 @@ export class MapComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService, private mapsAPILoader: MapsAPILoader,
+  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper,
+    private notesService: NotesService,
+    private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone) { }
   ngOnInit(): void {
     this.setCurrentPosition();
     this.notesService.fetchNotes().subscribe((notes) => {
       this.markers = this.markers.concat(notes);
     });
+
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ['(regions)']
@@ -51,6 +54,7 @@ export class MapComponent implements OnInit {
   }
 
   private setCurrentPosition() {
+    this.googleMapsAPIWrapper.getNativeMap().then((maps) => console.log(maps));
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;

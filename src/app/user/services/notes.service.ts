@@ -21,7 +21,7 @@ export class NotesService {
     this.af.auth.subscribe((auth) => {
       this.auth = auth;
       this.notesRef = this.af.database.list('/users/' + auth.uid + '/notes');
-      this.publicRef = this.af.database.list('/users/public/' + auth.uid);
+      this.publicRef = this.af.database.list('/users/public');
     });
   }
 
@@ -44,7 +44,7 @@ export class NotesService {
         this.af.auth.subscribe((auth) => {
           this.auth = auth;
           this.notesRef = this.af.database.list('/users/' + this.auth.uid + '/notes');
-          this.publicRef = this.af.database.list('/users/public/' + auth.uid);
+          this.publicRef = this.af.database.list('/users/public');
           this.subscribeNotesRef(observer);
           this.subscribePublicRef(observer);
         });

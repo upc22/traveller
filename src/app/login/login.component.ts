@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
   loginWithFB() {
     this.af.auth.login({
       provider: AuthProviders.Facebook,
-      method: AuthMethods.Popup
+      method: AuthMethods.Popup,
+      scope: ['email', 'user_friends']
     });
   }
 
