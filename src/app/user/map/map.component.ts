@@ -46,11 +46,19 @@ export class MapComponent implements OnInit {
     for (const marker of this.markers) {
       marker.isOpen = false;
     }
-    if (this.markers[this.lastIndex]) {
-      if (!this.markers[this.lastIndex].message) {
-        this.markers.splice(this.lastIndex, 1);
+    this.autoSaveDeleteNotes(this.lastIndex);
+  }
+
+  infoWindowClose(index: number) {
+    this.autoSaveDeleteNotes(index);
+  }
+
+  autoSaveDeleteNotes(index: number) {
+    if (this.markers[index]) {
+      if (!this.markers[index].message) {
+        this.markers.splice(index, 1);
       } else {
-        this.saveNote(this.lastIndex);
+        this.saveNote(index);
       }
     }
   }
