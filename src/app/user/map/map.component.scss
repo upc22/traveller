@@ -3,8 +3,33 @@
     width: 100vw;
 }
 
-agm-map+button {
-  position: fixed;
-  left: 10%;
-  bottom: 10%;
+.locate-me-button {
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    user-select: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    display: block;
+    position: fixed;
+    right: 10px;
+    bottom: 125px;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background-color 0.16s ease-out;
+}
+
+.locate-me-icon {
+    background-image: url('../../../assets/images/mylocation-sprite.png');
+    background-position: 0 0;
+    background-size: 180px 18px;
+    display: block;
+    height: 18px;
+    left: 6px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 6px;
+    width: 18px;
 }
