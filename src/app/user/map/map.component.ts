@@ -1,7 +1,11 @@
-import { Component, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { NotesService } from 'app/user/services/notes.service';
-import { GoogleMapsAPIWrapper } from '@agm/core';
+import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
 
+import { } from '@types/googlemaps';
+
+
+declare var google;
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -11,14 +15,36 @@ export class MapComponent implements OnInit {
 
   markers = [];
   @Output() toggleNav = new EventEmitter<boolean>();
-  lat = 51.678418;
-  lng = 7.809007;
-  zoom = 13;
+  lat = 0;
+  lng = 0;
+  zoom = 2;
   lastIndex = -1;
 
-  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService) { }
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
+  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService, private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) { }
   ngOnInit(): void {
     this.notesService.fetchNotes().subscribe((notes) => this.markers = notes);
+    this.mapsAPILoader.load().then(() => {
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['(regions)']
+      });
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          this.lat = place.geometry.location.lat();
+          this.lng = place.geometry.location.lng();
+          this.zoom = 5;
+        });
+      });
+    });
   }
 
   private setCurrentPosition() {
