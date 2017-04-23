@@ -1,8 +1,8 @@
-import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, Output, EventEmitter, NgZone, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { NotesService } from 'app/user/services/notes.service';
 import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
-
 import { } from '@types/googlemaps';
+import { Subscription } from 'rxjs/Subscription';
 declare var google;
 
 @Component({
@@ -10,7 +10,7 @@ declare var google;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
 
   markers = [];
   presentLocation = {};
@@ -19,19 +19,31 @@ export class MapComponent implements OnInit {
   lng = 0;
   zoom = 2;
   lastIndex = -1;
+  private notesSubscription: Subscription;
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper, private notesService: NotesService, private mapsAPILoader: MapsAPILoader,
+  constructor(private googleMapsAPIWrapper: GoogleMapsAPIWrapper,
+    private notesService: NotesService,
+    private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone) { }
+
   ngOnInit(): void {
     this.setCurrentPosition();
-    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes.slice(0, 20));
+    this.getNotes();
+    this.handleAutoComplete();
+  }
+
+  private getNotes() {
+    this.notesSubscription = this.notesService.fetchNotes().subscribe((notes) => {
+      this.markers = this.markers.concat(notes);
+    });
+  }
+
+  private handleAutoComplete() {
     this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['(regions)']
-      });
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
@@ -39,13 +51,23 @@ export class MapComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
-          this.zoom = 5;
+          this.zoom = this.setZoomLevel(place.address_components[0].types[0]);
         });
       });
     });
+  }
+
+  private setZoomLevel(type: string) {
+    switch (type) {
+      case 'sublocality_level_1': return 15;
+      case 'locality': return 13;
+      case 'administrative_area_level_2': return 9;
+      case 'administrative_area_level_1': return 7;
+      case 'country': return 5;
+      default: return 8;
+    }
   }
 
   private setCurrentPosition() {
@@ -134,4 +156,8 @@ export class MapComponent implements OnInit {
       });
     }
   }
+
+  ngOnDestroy(): void {
+      this.notesSubscription.unsubscribe();
+    }
 }
