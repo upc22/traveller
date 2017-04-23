@@ -27,7 +27,9 @@ export class MapComponent implements OnInit {
     private ngZone: NgZone) { }
   ngOnInit(): void {
     this.setCurrentPosition();
-    this.notesService.fetchNotes().subscribe((notes) => this.markers = notes.slice(0, 20));
+    this.notesService.fetchNotes().subscribe((notes) => {
+      this.markers = this.markers.concat(notes);
+    });
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ['(regions)']
