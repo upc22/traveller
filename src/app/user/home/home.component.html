@@ -1,3 +1,3 @@
-<app-menu></app-menu>
+<app-menu (toggleNav)="toggleNavBar($event)"></app-menu>
 <app-nav-bar *ngIf="isNavVisible" (showNav)="toggleNavBar($event)"></app-nav-bar>
 <app-map (toggleNav)="toggleNavBar($event)"></app-map>
