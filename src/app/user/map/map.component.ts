@@ -21,11 +21,11 @@ export class MapComponent implements OnInit, OnDestroy {
   lat = 0;
   lng = 0;
   zoom = 2;
-  lastIndex = -1;
   bounds = {
     lat : {f: 0 , b : 0 },
     lng : {f: 0 , b : 0 },
   };
+  newMarker: {};
   private notesSubscription: Subscription;
 
   @ViewChild('search')
@@ -54,6 +54,9 @@ export class MapComponent implements OnInit, OnDestroy {
   private getNotes() {
     this.notesSubscription = this.notesService.fetchNotes().subscribe((notes) => {
       this.markers = this.markers.concat(notes);
+      if (this.newMarker && this.newMarker['isRemove']) {
+        this.newMarker = null;
+      }
     });
   }
 
@@ -107,53 +110,38 @@ export class MapComponent implements OnInit, OnDestroy {
     this.lng = 0;
   }
 
-  mapClicked(evt) {
+  mapClicked($event) {
     this.closeOtherInfoWindow();
-    this.markers.push({
-      lat: evt.coords.lat,
-      lng: evt.coords.lng,
+    this.newMarker = this.createNewMarker($event.coords.lat, $event.coords.lng);
+    this.newMarker['isShow'] = true;
+  }
+
+  createNewMarker(lat, lng) {
+    return {
+      lat: lat || 0,
+      lng: lng || 0,
       isOpen: true,
-      isSave: false,
+      isShow: false,
       isPublic: true,
-      title:'',
-      message: ''
-    });
-    this.lastIndex = this.markers.length - 1;
+      title: '',
+      message: '',
+      iconUrl: 'assets/images/new-marker.png'
+    };
   }
 
   closeOtherInfoWindow() {
     for (const marker of this.markers) {
       marker.isOpen = false;
     }
-    this.autoSaveDeleteNotes(this.lastIndex);
   }
 
   infoWindowClose(index: number) {
-    this.autoSaveDeleteNotes(index);
+    this.newMarker = null;
   }
 
-  autoSaveDeleteNotes(index: number) {
-    if (this.markers[index]) {
-      if (!this.markers[index].message) {
-        this.deleteMarker(index);
-      } else {
-        this.saveNote(index);
-      }
-    }
-  }
-
-  handleKeyDown($event, index) {
-    const marker = this.markers[index];
-    marker.isSave = true;
-    if ($event.keyCode === 13) {
-      marker.isOpen = false;
-      this.autoSaveDeleteNotes(index);
-    }
-  }
-
-  clickedMarker(marker: {}, index: number) {
+  clickedMarker(marker: {}) {
     this.closeOtherInfoWindow();
-    this.lastIndex = index;
+    this.newMarker = null;
     marker['isOpen'] = true;
     this.toggleNav.emit(true);
   }
@@ -162,21 +150,19 @@ export class MapComponent implements OnInit, OnDestroy {
     this.markers.splice(index, 1);
   }
 
-  saveNote(index: number) {
-    const currentMarker = this.markers[index];
-    currentMarker.isOpen = false;
-    if (currentMarker.isSave) {
-      currentMarker.isSave = false;
-      console.log(currentMarker);
-      this.lastIndex = -1;
+  saveNote() {
+    const currentMarker = this.newMarker;
+    currentMarker['isOpen'] = false;
+    if (currentMarker['message'] || currentMarker['title']) {
       this.notesService.saveNote({
-        title:currentMarker.title,
-        message: currentMarker.message,
-        lat: currentMarker.lat,
-        lng: currentMarker.lng,
-        isPublic: currentMarker.isPublic,
+        title: currentMarker['title'],
+        message: currentMarker['message'],
+        lat: currentMarker['lat'],
+        lng: currentMarker['lng'],
+        isPublic: currentMarker['isPublic'],
         timestamp: new Date().getTime()
       });
+      this.newMarker['isRemove'] = true;
     }
   }
 
