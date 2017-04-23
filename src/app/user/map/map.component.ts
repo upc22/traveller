@@ -35,9 +35,7 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['(regions)']
-      });
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
@@ -48,7 +46,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
-          this.zoom = 5;
+          this.zoom = 15;
         });
       });
     });
