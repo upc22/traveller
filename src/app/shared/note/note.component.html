@@ -10,7 +10,7 @@
         </div>
         <div class="row switch">
             <label for="isPublic">{{marker.isPublic? "Public" : "Private"}}</label>
-            <ui-switch name="isPublic" [(ngModel)]="marker.isPublic" color="green" size="small"></ui-switch>
+            <!--<ui-switch name="isPublic" [(ngModel)]="marker.isPublic" color="green" size="small"></ui-switch>-->
         </div>
         <div class="image-upload">
             <image-upload [max]="5" [buttonCaption]="'Upload Moments'" (onFileUploadFinish)="imageUpload($event)"></image-upload>
