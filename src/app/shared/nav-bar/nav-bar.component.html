@@ -1,3 +1,16 @@
-<p>
-  nav-bar works!
-</p>
+<nav class="notes-section">
+    <div class="notes-list">
+        <div class="heading-wrapper">
+            <h2>Notes</h2>
+            <span class="k-icon k-i-close" (click)="closeNav()"></span>
+        </div>
+        <div class="notes">
+            <div *ngFor="let note of notes" (click)="handleNoteClick(note)">
+                <h4>{{note.title}}</h4>
+                <p class="note-description"> {{note.message}}</p>
+                <img *ngIf="note.imageUrl" [src]="note.imageUrl" [alt]="note.title" />
+            </div>
+        </div>
+        <p class="blank-message" [hidden]="notes.length">No Notes Found!</p>
+    </div>
+</nav>
